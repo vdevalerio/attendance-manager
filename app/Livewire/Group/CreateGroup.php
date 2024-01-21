@@ -22,6 +22,6 @@ class CreateGroup extends Component
 
         Group::create($validated);
 
-        return $this->redirect('/home', navigate:true);
+        return $this->redirect('/groups/index', navigate:true);
     }
 }
