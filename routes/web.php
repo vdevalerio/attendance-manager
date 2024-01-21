@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Group\CreateGroup;
+use App\Livewire\Group\EditGroup;
 use App\Livewire\Group\IndexGroup;
 use App\Livewire\Register;
 use App\Livewire\Home;
@@ -29,8 +30,9 @@ Route::get('/login', Login::class)->name('login');
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', Home::class)->name('home');
-    Route::get('/groups/create', CreateGroup::class)->name('groups.create');
     Route::get('/groups/index', IndexGroup::class)->name('groups.index');
+    Route::get('/groups/create', CreateGroup::class)->name('groups.create');
+    Route::get('/groups/{group}/edit', EditGroup::class)->name('groups.edit');
     Route::get('/people/create', CreatePerson::class)->name('people.create');
 });
 
