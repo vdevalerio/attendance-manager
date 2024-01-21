@@ -24,13 +24,13 @@ Route::get('/', function () {
     return Auth::check() ? redirect('/home') : redirect('/login');
 });
 
-Route::get('/register', Register::class);
-Route::get('/login', Login::class);
+Route::get('/register', Register::class)->name('register');
+Route::get('/login', Login::class)->name('login');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/home', Home::class);
-    Route::get('/groups/create', CreateGroup::class);
-    Route::get('/groups/index', IndexGroup::class);
-    Route::get('/people/create', CreatePerson::class);
+    Route::get('/home', Home::class)->name('home');
+    Route::get('/groups/create', CreateGroup::class)->name('groups.create');
+    Route::get('/groups/index', IndexGroup::class)->name('groups.index');
+    Route::get('/people/create', CreatePerson::class)->name('people.create');
 });
 
