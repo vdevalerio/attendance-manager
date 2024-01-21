@@ -20,7 +20,7 @@
                 <td>
                     <button class="btn btn-primary btn-sm">View</button>
                     <button class="btn btn-secondary btn-sm" wire:navigate href="/groups/{{$group->id}}/edit">Edit</button>
-                    <button class="btn btn-danger btn-sm">Delete</button>
+                    <button class="btn btn-danger btn-sm" wire:click="deleteGroup({{$group->id}})">Delete</button>
                 </td>
             </tr>
             @endforeach

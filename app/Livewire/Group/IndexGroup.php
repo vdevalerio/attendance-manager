@@ -18,4 +18,11 @@ class IndexGroup extends Component
     {
         return view('livewire.group.index-group');
     }
+
+    public function deleteGroup(Group $group)
+    {
+        $group->delete();
+
+        return $this->redirect('/groups/index', navigate:true);
+    }
 }
