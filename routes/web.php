@@ -1,8 +1,12 @@
 <?php
 
+use App\Livewire\Group\CreateGroup;
+use App\Livewire\Group\IndexGroup;
 use App\Livewire\Register;
 use App\Livewire\Home;
 use App\Livewire\Login;
+use App\Livewire\Person\CreatePerson;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Auth::check() ? redirect('/home') : redirect('/login');
 });
 
 Route::get('/register', Register::class);
@@ -25,6 +29,8 @@ Route::get('/login', Login::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/home', Home::class);
-
+    Route::get('/groups/create', CreateGroup::class);
+    Route::get('/groups/index', IndexGroup::class);
+    Route::get('/people/create', CreatePerson::class);
 });
 
