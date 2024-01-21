@@ -8,7 +8,6 @@ use Livewire\Component;
 class CreateGroup extends Component
 {
     public $name = '';
-    public $code = '';
 
     public function render()
     {
