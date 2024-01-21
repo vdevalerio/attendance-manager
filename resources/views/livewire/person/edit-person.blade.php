@@ -1,9 +1,9 @@
 <div class="card offset-3 col-6">
     <div class="card-header">
-        Create Person
+        Edit Person
     </div>
     <div class="card-body">
-        <form wire:submit.prevent="createPerson" id="create-person-form">
+        <form wire:submit.prevent="editPerson" id="create-person-form">
             <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <input wire:model="name" type="text" class="form-control" id="name">

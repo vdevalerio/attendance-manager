@@ -7,6 +7,8 @@ use App\Livewire\Register;
 use App\Livewire\Home;
 use App\Livewire\Login;
 use App\Livewire\Person\CreatePerson;
+use App\Livewire\Person\EditPerson;
+use App\Livewire\Person\IndexPerson;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +35,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/groups/index', IndexGroup::class)->name('groups.index');
     Route::get('/groups/create', CreateGroup::class)->name('groups.create');
     Route::get('/groups/{group}/edit', EditGroup::class)->name('groups.edit');
+
+
+    Route::get('/people/index', IndexPerson::class)->name('people.index');
     Route::get('/people/create', CreatePerson::class)->name('people.create');
+    Route::get('/people/{person}/edit', EditPerson::class)->name('people.edit');
 });
 

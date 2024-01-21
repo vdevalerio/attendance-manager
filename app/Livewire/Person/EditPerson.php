@@ -5,29 +5,30 @@ namespace App\Livewire\Person;
 use App\Models\Person;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 
-class CreatePerson extends Component
+class EditPerson extends Component
 {
-    use WithFileUploads;
-
+    public $person;
     public $name = '';
     public $image = '';
 
-    protected $listeners = [
-        'setImageData' => 'updateImage',
-    ];
-
     public function render()
     {
-        return view('livewire.person.create-person');
+        return view('livewire.person.edit-person');
     }
 
-    public function createPerson()
+    public function mount(Person $person)
+    {
+        $this->person = $person;
+        $this->name = $person->name;
+        $this->image = $person->image;
+    }
+
+    public function editPerson()
     {
         $validated = $this->validate([
-            'name' => 'required',
-            'image' => 'required',
+            'name' => 'sometimes',
+            'image' => 'sometimes',
         ]);
 
         if (preg_match('/^data:image\/(\w+);base64,/', $validated['image'], $type)) {
@@ -53,7 +54,7 @@ class CreatePerson extends Component
 
         $validated['image'] = $imageName;
 
-        Person::create($validated);
+        $this->person->update($validated);
 
         return $this->redirect('/people/index', navigate:true);
     }
