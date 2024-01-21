@@ -1,7 +1,9 @@
 <div class="container">
     <div class="row">
-        <h1>Group Index</h1>
-        <button class="btn btn-primary btn-sm">Create Group</button>
+        <div class="col d-flex justify-content-between align-items-center" wire:navigate href="/groups/create">
+            <h1>Group Index</h1>
+            <button class="btn btn-primary btn-sm">Create Group</button>
+        </div>
     </div>
     <table class="table">
         <thead>
