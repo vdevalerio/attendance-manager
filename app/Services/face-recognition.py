@@ -4,6 +4,7 @@ import numpy as np
 import mysql.connector
 import os
 from dotenv import load_dotenv
+import argparse
 
 load_dotenv()
 
@@ -41,7 +42,40 @@ def load_face_encodings_from_db():
     cursor.close()
     return known_face_encodings, known_face_names
 
+parser = argparse.ArgumentParser(description='Start attendance for a group.')
+parser.add_argument('group_id', type=int, help='The ID of the group to start attendance for')
+args = parser.parse_args()
+
+def create_new_attendance(group_id):
+    cursor = mydb.cursor()
+    insert_query = "INSERT INTO attendances (group_id, created_at, updated_at) VALUES (%s, NOW(), NOW())"
+    cursor.execute(insert_query, (group_id,))
+    mydb.commit()
+    attendance_id = cursor.lastrowid
+    cursor.close()
+    return attendance_id
+
+recognized_people_set = set()
+def add_person_to_attendance(attendance_id, person_id):
+    if person_id not in recognized_people_set:
+        cursor = mydb.cursor()
+        insert_query = "INSERT INTO attendance_person (attendance_id, person_id, created_at, updated_at) VALUES (%s, %s, NOW(), NOW())"
+        cursor.execute(insert_query, (attendance_id, person_id))
+        mydb.commit()
+        cursor.close()
+        recognized_people_set.add(person_id)
+
+def get_person_id_by_name(name):
+    cursor = mydb.cursor()
+    cursor.execute("SELECT id FROM people WHERE name = %s", (name,))
+    result = cursor.fetchone()
+    cursor.close()
+    return result[0] if result else None
+
+
 known_face_encodings, known_face_names = load_face_encodings_from_db()
+
+attendance_id = create_new_attendance(args.group_id)
 
 cap = cv2.VideoCapture(0)
 
@@ -67,6 +101,10 @@ while True:
             if True in matches:
                 first_match_index = matches.index(True)
                 name = known_face_names[first_match_index]
+
+                person_id = get_person_id_by_name(name)
+                if person_id is not None:
+                    add_person_to_attendance(attendance_id, person_id)
             else:
                 unknown_matches = face_recognition.compare_faces(unknown_face_encodings, face_encoding, tolerance=0.6)
                 if True in unknown_matches:

@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Attendance\IndexAttendance;
+use App\Livewire\Attendance\ShowAttendance;
 use App\Livewire\Group\CreateGroup;
 use App\Livewire\Group\EditGroup;
 use App\Livewire\Group\IndexGroup;
@@ -40,5 +42,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/people/index', IndexPerson::class)->name('people.index');
     Route::get('/people/create', CreatePerson::class)->name('people.create');
     Route::get('/people/{person}/edit', EditPerson::class)->name('people.edit');
+
+
+    Route::get('/attendances/{group}/index', IndexAttendance::class)->name('attendances.group.index');
+    Route::get('/attendances/{group}/{attendance}/show', ShowAttendance::class)->name('attendances.group.attendance.show');
 });
 

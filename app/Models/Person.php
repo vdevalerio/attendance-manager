@@ -13,4 +13,9 @@ class Person extends Model
         'name',
         'image',
     ];
+
+    public function attendances()
+    {
+        return $this->belongsToMany(Attendance::class)->withTimestamps();
+    }
 }

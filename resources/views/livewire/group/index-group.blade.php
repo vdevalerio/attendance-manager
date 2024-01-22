@@ -18,7 +18,7 @@
                 <th scope="row">{{ $group->id }}</th>
                 <td>{{ $group->name }}</td>
                 <td>
-                    <button class="btn btn-primary btn-sm">View</button>
+                    <button class="btn btn-primary btn-sm" wire:navigate href="/attendances/{{$group->id}}/index">Attendances</button>
                     <button class="btn btn-secondary btn-sm" wire:navigate href="/groups/{{$group->id}}/edit">Edit</button>
                     <button class="btn btn-danger btn-sm" wire:click="deleteGroup({{$group->id}})">Delete</button>
                 </td>
